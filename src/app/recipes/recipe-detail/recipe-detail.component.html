@@ -1,0 +1,58 @@
+<div *ngIf="!recipe">
+  <h3 class="alert alert-danger"> Error finding recipe</h3>
+</div>
+<div *ngIf="recipe">
+  <div class="row">
+    <div class="col-xs-12">
+        <img
+        class="img-resposive" 
+        style="max-height: 300px;"
+        [src]="recipe.imagePath"
+        [alt]="recipe.name">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1> {{recipe.name}}</h1>  
+    </div>
+  </div>
+
+  <div class="row" *ngIf="recipe.userId == currUserId">
+    <div class="col-xs-12">
+      <div class="btn-group" appDropdown>
+        <button 
+          class="btn btn-primary dropdown-toggle" 
+          type="button">
+          Manage <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a style="cursor: pointer;"
+                 (click)="onEditRecipe()"> Edit Recipe</a></li>
+          <li><a (click)= "onDeleteRecipe()" style="cursor: pointer;"> Delete Recipe</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      {{recipe.description}} 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="list-group">
+        <li class="list-group-item"
+          *ngFor="let ing of recipe.ingredients">
+          {{ing.name}} - {{ing.amount}}
+        </li>
+      </ul>
+    </div>
+  </div> 
+  <div class="row">
+    <div class="col-xs-12">
+      {{ amountStr }}
+    </div>
+  </div>
+</div>  

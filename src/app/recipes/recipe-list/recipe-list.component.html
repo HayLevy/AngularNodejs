@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success" (click)= "onAddNewRecipe()"> New Recipe </button>
+  </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12" *ngIf="!searchIsAnabaled">
+        <button (click)="showSearch()" type="button"
+          class="btn btn-primary">Filter
+        </button>
+    </div> 
+
+    <!-- show div if enabled -->
+    <div class="col-xs-12" *ngIf="searchIsAnabaled">
+        <form>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="name"> Search </label>
+                <input type="text"
+                       id="name" 
+                       class="form-control"
+                       name="filterName"
+                       (input)="onSearchChange()"
+                       [(ngModel)]="filterName">
+                       <!-- ngModel - two way binding -->
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+              <div class="col-xs-12">
+                <div class="form-check">
+                  <input type="checkbox" 
+                         class="form-check-input" 
+                         id="showMy"
+                         name="showMy"
+                         (input)="showMyChecked()"
+                         [(ngModel)]="showMy">
+                  <label class="form-check-label" for="showMy">Show only my recipes</label>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="minIng"> Min ingedients </label>
+                <input type="number"
+                       id="minIng"
+                       class="form-control"
+                       name="filterMin"
+                       [(ngModel)]="filterMin">
+
+              </div>
+            </div>
+
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="maxIng"> Max ingedients </label>
+                <input type="number"
+                       id="maxIng" 
+                       class="form-control"
+                       name="filterMax"
+                       [(ngModel)]="filterMax">
+              </div>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-xs-6 ">
+                <button type="button"
+                        (click)="showSearch()"
+                        class="btn btn-danger">Cancle filter</button>
+              </div>
+            </div>
+        
+        </form>
+    </div>
+    
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <!-- | = pipe -->
+    <app-recipe-item 
+      *ngFor="let recipeEl of recipes | recipeFilter:filterMin:filterMax:showMy; let i = index"
+      [recipe]="recipeEl"
+      [index]="i">
+    </app-recipe-item>
+  </div>
+</div>
+
